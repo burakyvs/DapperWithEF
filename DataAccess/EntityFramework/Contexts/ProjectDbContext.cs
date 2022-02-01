@@ -1,30 +1,36 @@
 ﻿using Entity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 namespace DataAccess.EntityFramework.Contexts
 {
-    internal class ProjectDbContext : DbContext
+    public class ProjectDbContext : DbContext
     {
-        public DbSet<Product> Products { get; set; }
-        public ProjectDbContext(DbContextOptions options) : base(options)
+        public static string ConnectionString { get; set; }
+        public ProjectDbContext(DbContextOptions options, IConfiguration configuration)
+            : base(options)
         {
+            Configuration = configuration;
+            ConnectionString = Configuration.GetConnectionString("PostgreConnection");
+        }
+
+        public DbSet<Product> Products { get; set; }
+
+        protected IConfiguration Configuration { get; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);   
-        }
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<Product>().HasKey(i => i.Id);
-
-            base.OnModelCreating(modelBuilder);
+            if (!optionsBuilder.IsConfigured)
+            {
+                base.OnConfiguring(optionsBuilder.UseNpgsql(ConnectionString));
+            }
         }
     }
 }
