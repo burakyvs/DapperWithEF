@@ -3,7 +3,7 @@ using Dapper.Contrib.Extensions;
 using DataAccess.Abstract;
 using System.Linq.Expressions;
 
-namespace DataAccess.Dapper
+namespace DataAccess.Concrete.Dapper
 {
     public class DapperAccessor<TEntity> : DataAccessorBase<TEntity> where TEntity : class
     {

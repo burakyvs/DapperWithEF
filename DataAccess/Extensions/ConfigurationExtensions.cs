@@ -1,6 +1,6 @@
 ﻿using DataAccess.Abstract;
 using DataAccess.Concrete;
-using DataAccess.Dapper;
+using DataAccess.Concrete.Dapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 

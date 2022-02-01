@@ -1,5 +1,5 @@
 ﻿using DataAccess.Abstract;
-using DataAccess.Dapper;
+using DataAccess.Concrete.Dapper;
 using DataAccess.EntityFramework.Contexts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
