@@ -1,32 +1,32 @@
-﻿using DataAccess.Abstract;
-using System.Data.Common;
+﻿using System.Data.Common;
 using System.Data.SqlClient;
+using System.Linq.Expressions;
 
-namespace DataAccess.Dapper
+namespace DataAccess.Abstract
 {
-    public class DapperBase : IORMBase
+    public abstract class DataAccessorBase<TEntity> : IDataAccessor<TEntity>, IDbConnector where TEntity : class
     {
         public string ConnectionString { get => _connectionString; set => _connectionString = value; }
         private string _connectionString;
 
         public bool IsTransactionActive { get => _isTransactionActive; set => _isTransactionActive = value; }
-        private bool _isTransactionActive;
+        private bool _isTransactionActive = false;
 
-        public DapperBase(string connectionString)
+        public DataAccessorBase(string connectionString)
         {
             _connectionString = connectionString;
         }
 
-        public async Task<SqlConnection> OpenConnectionAsync()
+        public virtual async Task<SqlConnection> OpenConnectionAsync()
         {
             try
             {
-                SqlConnection connection = new SqlConnection(_connectionString);
+                SqlConnection connection = new SqlConnection(ConnectionString);
                 await connection.OpenAsync();
 
                 return connection;
             }
-            catch(Exception error)
+            catch (Exception error)
             {
                 throw new Exception($"Cannot open database connection: Message: ${error.Message}, StackTrace: {error.StackTrace}");
             }
@@ -52,12 +52,12 @@ namespace DataAccess.Dapper
                 var transaction = await connection.BeginTransactionAsync();
                 if (transaction != null)
                 {
-                    _isTransactionActive = true;
+                    IsTransactionActive = true;
                     return transaction;
                 }
                 else
                 {
-                    _isTransactionActive = false;
+                    IsTransactionActive = false;
                     throw new Exception($"Cannot begin transaction.");
                 }
             }
@@ -71,7 +71,7 @@ namespace DataAccess.Dapper
         {
             try
             {
-                if(commit)
+                if (commit)
                     await transaction.CommitAsync();
                 else
                 {
@@ -127,5 +127,13 @@ namespace DataAccess.Dapper
                 throw new Exception($"Cannot release transaction save point: Message: ${error.Message}, StackTrace: {error.StackTrace}");
             }
         }
+
+        public abstract void AddAsync(TEntity entity);
+        public abstract void DeleteAsync(TEntity entity);
+        public abstract void AddRangeAsync(ICollection<TEntity> entities);
+        public abstract void DeleteRangeAsync(ICollection<TEntity> entities);
+        public abstract void UpdateAsync(TEntity entity);
+        public abstract void GetByIdAsync(int id);
+        public abstract void GetAllAsync(Expression expression);
     }
 }
