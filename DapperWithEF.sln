@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DapperWithEF", "DapperWithEF\DapperWithEF.csproj", "{1856C41A-F131-4B96-BCE3-899ADC897451}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\DataAccess.csproj", "{82184C6A-E812-4D54-B388-D555F2D02F58}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entity", "Entity\Entity.csproj", "{C39B19DD-CE74-42C4-BA45-CA3009491223}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1856C41A-F131-4B96-BCE3-899ADC897451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1856C41A-F131-4B96-BCE3-899ADC897451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1856C41A-F131-4B96-BCE3-899ADC897451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1856C41A-F131-4B96-BCE3-899ADC897451}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82184C6A-E812-4D54-B388-D555F2D02F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82184C6A-E812-4D54-B388-D555F2D02F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82184C6A-E812-4D54-B388-D555F2D02F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82184C6A-E812-4D54-B388-D555F2D02F58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C39B19DD-CE74-42C4-BA45-CA3009491223}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C39B19DD-CE74-42C4-BA45-CA3009491223}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C39B19DD-CE74-42C4-BA45-CA3009491223}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C39B19DD-CE74-42C4-BA45-CA3009491223}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D9E7F0FA-7978-4AF9-B549-3251EE244AC2}
+	EndGlobalSection
+EndGlobal
