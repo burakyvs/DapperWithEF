@@ -17,7 +17,9 @@ namespace DataAccess.Extensions
 
             databaseBuilderOptions.Invoke(databaseBuilder);
 
-            typeof(TDbContext).SetConnectionString(databaseBuilder.Configuration);
+            var configuration = databaseBuilder.Configuration ?? throw new ArgumentNullException(nameof(databaseBuilder.Configuration));
+
+            typeof(TDbContext).SetConnectionString(configuration);
 
             services.AddDbContext<TDbContext>();
 
