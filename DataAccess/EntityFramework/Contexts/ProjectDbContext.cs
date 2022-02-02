@@ -1,6 +1,6 @@
-﻿using Entity;
+﻿using DataAccess.Concrete.PostgreSql;
+using Entity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using System.Reflection;
 
 namespace DataAccess.EntityFramework.Contexts
@@ -8,19 +8,20 @@ namespace DataAccess.EntityFramework.Contexts
     public class ProjectDbContext : DbContext
     {
         public static string ConnectionString { get; set; }
-        public ProjectDbContext(DbContextOptions options, IConfiguration configuration)
+        private static Type DbConnectorType = typeof(PostgreSqlDbConnector);
+        public DbSet<Product> Products { get; set; }
+        
+
+        public ProjectDbContext(DbContextOptions options)
             : base(options)
         {
-            Configuration = configuration;
-            ConnectionString = Configuration.GetConnectionString("PostgreConnection");
         }
 
-        public DbSet<Product> Products { get; set; }
-
-        protected IConfiguration Configuration { get; }
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Product>().HasKey(p => p.Id);
+
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(modelBuilder);
         }

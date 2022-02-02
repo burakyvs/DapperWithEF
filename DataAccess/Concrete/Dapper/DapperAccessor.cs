@@ -1,91 +1,50 @@
-﻿using Dapper;
-using Dapper.Contrib.Extensions;
+﻿using Dapper.Contrib.Extensions;
 using DataAccess.Abstract;
-using System.Linq.Expressions;
+using System.Data.Common;
 
 namespace DataAccess.Concrete.Dapper
 {
     public class DapperAccessor<TEntity> : DataAccessorBase<TEntity> where TEntity : class
     {
-        public DapperAccessor(string connectionString) : base(connectionString)
+        public DapperAccessor()
         {
         }
 
-        public async override void AddAsync(TEntity entity)
+        public async override Task AddAsync(DbConnection connection, TEntity entity)
         {
-            using (var connection = await base.OpenConnectionAsync())
-            {
-                using (var transaction = await base.BeginTransaction(connection))
-                {
-                    connection.Insert(entity);
-                }
-            }
+            await connection.InsertAsync(entity);
         }
 
-        public override async void AddRangeAsync(ICollection<TEntity> entities)
+        public override async Task AddRangeAsync(DbConnection connection, ICollection<TEntity> entities)
         {
-            using (var connection = await base.OpenConnectionAsync())
-            {
-                using (var transaction = await base.BeginTransaction(connection))
-                {
-                    await connection.InsertAsync(entities);
-                }
-            }
+            await connection.InsertAsync(entities);
         }
 
-        public override async void DeleteAsync(TEntity entity)
+        public override async Task DeleteAsync(DbConnection connection, TEntity entity)
         {
-            using (var connection = await base.OpenConnectionAsync())
-            {
-                using (var transaction = await base.BeginTransaction(connection))
-                {
-                    await connection.DeleteAsync(entity);
-                }
-            }
+            await connection.DeleteAsync(entity);
         }
 
-        public override async void DeleteRangeAsync(ICollection<TEntity> entities)
+        public override async Task DeleteRangeAsync(DbConnection connection, ICollection<TEntity> entities)
         {
-            using (var connection = await base.OpenConnectionAsync())
-            {
-                using (var transaction = await base.BeginTransaction(connection))
-                {
-                    await connection.DeleteAsync(entities);
-                }
-            }
+            await connection.DeleteAsync(entities);
         }
 
-        public override async void GetAllAsync(Expression expression)
+        public override async Task<IEnumerable<TEntity>> GetAllAsync(DbConnection connection)
         {
-            using (var connection = await base.OpenConnectionAsync())
-            {
-                using (var transaction = await base.BeginTransaction(connection))
-                {
-                    var entities = await connection.GetAllAsync<TEntity>();
-                }
-            }
+            var entities = await connection.GetAllAsync<TEntity>();
+            return entities;
         }
 
-        public override async void GetByIdAsync(int id)
+        public override async Task<TEntity> GetByIdAsync(DbConnection connection, int id)
         {
-            using (var connection = await base.OpenConnectionAsync())
-            {
-                using (var transaction = await base.BeginTransaction(connection))
-                {
-                    var entities = await connection.GetAsync<TEntity>(id);
-                }
-            }
+            var entity = await connection.GetAsync<TEntity>(id);
+            return entity;
         }
 
-        public override async void UpdateAsync(TEntity entity)
+        public override async Task UpdateAsync(DbConnection connection, TEntity entity)
         {
-            using (var connection = await base.OpenConnectionAsync())
-            {
-                using (var transaction = await base.BeginTransaction(connection))
-                {
-                    await connection.UpdateAsync(entity);
-                }
-            }
+             await connection.UpdateAsync(entity);
         }
     }
 }

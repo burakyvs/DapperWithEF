@@ -9,7 +9,7 @@ namespace DataAccess.Concrete
     public class DatabaseBuilderOptions : IDatabaseBuilderOptions
     {
         private readonly IServiceCollection _services;
-        protected IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; set; }
         public DatabaseBuilderOptions(IServiceCollection services)
         {
             _services = services;

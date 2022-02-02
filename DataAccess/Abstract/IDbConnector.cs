@@ -12,9 +12,9 @@ namespace DataAccess.Abstract
     {
         public string ConnectionString { get; set; }
         public bool IsTransactionActive { get; set; }
-        public Task<SqlConnection> OpenConnectionAsync();
-        public Task CloseConnectionAsync(SqlConnection connection);
-        public Task<DbTransaction> BeginTransaction(SqlConnection connection);
+        public Task<DbConnection> OpenConnectionAsync();
+        public Task CloseConnectionAsync(DbConnection connection);
+        public Task<DbTransaction> BeginTransaction(DbConnection connection);
         public Task CloseTransaction(DbTransaction transaction, bool commit = true);
         public Task RollbackTransaction(DbTransaction transaction, string? savePointName = null);
         public Task SaveTransaction(DbTransaction transaction, string savePointName);

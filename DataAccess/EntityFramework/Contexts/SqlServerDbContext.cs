@@ -1,18 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DataAccess.Concrete.SqlServer;
+using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.EntityFramework.Contexts
 {
     public class SqlServerDbContext : ProjectDbContext
     {
-        public SqlServerDbContext(DbContextOptions<SqlServerDbContext> options, IConfiguration configuration) : base(options, configuration)
-        {
-            ConnectionString = Configuration.GetConnectionString("SqlServerConnection");
+        private static Type DbConnectorType = typeof(SqlServerDbConnector);
+        public SqlServerDbContext(DbContextOptions<SqlServerDbContext> options) : base(options)
+        { 
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
