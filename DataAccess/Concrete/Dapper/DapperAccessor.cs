@@ -10,24 +10,24 @@ namespace DataAccess.Concrete.Dapper
         {
         }
 
-        public async override Task AddAsync(DbConnection connection, TEntity entity)
+        public async override Task AddAsync(DbTransaction transaction, TEntity entity)
         {
-            await connection.InsertAsync(entity);
+            await transaction.Connection.InsertAsync(entity, transaction);
         }
 
-        public override async Task AddRangeAsync(DbConnection connection, ICollection<TEntity> entities)
+        public override async Task AddRangeAsync(DbTransaction transaction, ICollection<TEntity> entities)
         {
-            await connection.InsertAsync(entities);
+            await transaction.Connection.InsertAsync(entities, transaction);
         }
 
-        public override async Task DeleteAsync(DbConnection connection, TEntity entity)
+        public override async Task DeleteAsync(DbTransaction transaction, TEntity entity)
         {
-            await connection.DeleteAsync(entity);
+            await transaction.Connection.DeleteAsync(entity, transaction);
         }
 
-        public override async Task DeleteRangeAsync(DbConnection connection, ICollection<TEntity> entities)
+        public override async Task DeleteRangeAsync(DbTransaction transaction, ICollection<TEntity> entities)
         {
-            await connection.DeleteAsync(entities);
+            await transaction.Connection.DeleteAsync(entities);
         }
 
         public override async Task<IEnumerable<TEntity>> GetAllAsync(DbConnection connection)
@@ -42,9 +42,9 @@ namespace DataAccess.Concrete.Dapper
             return entity;
         }
 
-        public override async Task UpdateAsync(DbConnection connection, TEntity entity)
+        public override async Task UpdateAsync(DbTransaction transaction, TEntity entity)
         {
-             await connection.UpdateAsync(entity);
+             await transaction.Connection.UpdateAsync(entity, transaction);
         }
     }
 }
