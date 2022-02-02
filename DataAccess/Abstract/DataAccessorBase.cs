@@ -10,6 +10,6 @@ namespace DataAccess.Abstract
         public abstract Task DeleteRangeAsync(DbTransaction transaction, ICollection<TEntity> entities);
         public abstract Task UpdateAsync(DbTransaction transaction, TEntity entity);
         public abstract Task<TEntity> GetByIdAsync(DbConnection connection, int id);
-        public abstract Task<IEnumerable<TEntity>> GetAllAsync(DbConnection connection);
+        public abstract Task<IEnumerable<TEntity>> GetAllAsync(DbConnection connection, Func<TEntity, bool> expression = null);
     }
 }

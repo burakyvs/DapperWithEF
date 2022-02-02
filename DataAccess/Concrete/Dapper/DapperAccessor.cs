@@ -1,6 +1,7 @@
 ﻿using Dapper.Contrib.Extensions;
 using DataAccess.Abstract;
 using System.Data.Common;
+using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.Dapper
 {
@@ -30,10 +31,11 @@ namespace DataAccess.Concrete.Dapper
             await transaction.Connection.DeleteAsync(entities);
         }
 
-        public override async Task<IEnumerable<TEntity>> GetAllAsync(DbConnection connection)
+        public override async Task<IEnumerable<TEntity>> GetAllAsync(DbConnection connection, Func<TEntity, bool> expression = null)
         {
             var entities = await connection.GetAllAsync<TEntity>();
-            return entities;
+            var queriedEntities = expression != null ? entities.Where(expression) : entities;
+            return queriedEntities;
         }
 
         public override async Task<TEntity> GetByIdAsync(DbConnection connection, int id)
