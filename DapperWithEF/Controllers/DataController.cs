@@ -27,7 +27,7 @@ namespace DapperWithEF.Controllers
             {
                 using (var transaction = await _dbConnector.BeginTransaction(connection))
                 {
-                    await _dataAccessor.AddAsync(connection, new Product { Name = $"TestProduct-{ticks}", Price = 34.5M });
+                    await _dataAccessor.AddAsync(transaction, new Product { Name = $"TestProduct-{ticks}", Price = 34.5M });
 
                     await transaction.CommitAsync();
 
