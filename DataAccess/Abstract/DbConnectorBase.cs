@@ -77,13 +77,17 @@ namespace DataAccess.Abstract
             try
             {
                 if (commit)
+                {
                     await transaction.CommitAsync();
+                    await transaction.DisposeAsync();
+                }
                 else
                 {
                     await transaction.RollbackAsync();
                     await transaction.DisposeAsync();
                 }
 
+                IsTransactionActive = false;
             }
             catch (Exception error)
             {
