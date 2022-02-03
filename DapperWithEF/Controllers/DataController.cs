@@ -1,7 +1,5 @@
-﻿using Dapper;
-using DataAccess.Abstract;
+﻿using DataAccess.Abstract;
 using Entity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DapperWithEF.Controllers

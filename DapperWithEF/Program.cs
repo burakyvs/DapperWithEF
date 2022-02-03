@@ -9,7 +9,7 @@ var services = builder.Services;
 
 services.AddControllers();
 
-// Change the ProjectDbContext below, if you want to use another DbContext. 
+// If you want to use another DbContext, change the ProjectDbContext below. 
 
 services.InitDatabaseConnection<ProjectDbContext>(db =>
 {

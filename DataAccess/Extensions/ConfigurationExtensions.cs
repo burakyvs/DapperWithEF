@@ -1,7 +1,5 @@
 ﻿using DataAccess.Abstract;
 using DataAccess.Concrete;
-using DataAccess.Concrete.Dapper;
-using DataAccess.Concrete.PostgreSql;
 using DataAccess.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
