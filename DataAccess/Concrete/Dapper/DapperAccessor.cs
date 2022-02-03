@@ -1,11 +1,12 @@
 ﻿using Dapper.Contrib.Extensions;
 using DataAccess.Abstract;
+using Entity.Abstract;
 using System.Data.Common;
 using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.Dapper
 {
-    public class DapperAccessor<TEntity> : DataAccessorBase<TEntity> where TEntity : class
+    public class DapperAccessor<TEntity> : DataAccessorBase<TEntity> where TEntity : class, IEntity
     {
         public DapperAccessor()
         {

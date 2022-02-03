@@ -1,8 +1,9 @@
-﻿using System.Data.Common;
+﻿using Entity.Abstract;
+using System.Data.Common;
 
 namespace DataAccess.Abstract
 {
-    public abstract class DataAccessorBase<TEntity> : IDataAccessor<TEntity> where TEntity : class
+    public abstract class DataAccessorBase<TEntity> : IDataAccessor<TEntity> where TEntity : class, IEntity
     {
         public abstract Task AddAsync(DbTransaction transaction, TEntity entity);
         public abstract Task DeleteAsync(DbTransaction transaction, TEntity entity);

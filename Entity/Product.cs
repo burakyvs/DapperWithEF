@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using Entity.Abstract;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entity
 {
     [Table("product")]
-    public class Product
+    public class Product : IEntity
     {
         [Column("id")]
         public int Id { get; set; }
