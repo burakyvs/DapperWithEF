@@ -2,7 +2,6 @@
 using DataAccess.Abstract;
 using Entity.Abstract;
 using System.Data.Common;
-using System.Linq.Expressions;
 
 namespace DataAccess.Concrete.Dapper
 {
