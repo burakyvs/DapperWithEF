@@ -9,8 +9,12 @@ namespace DataAccess.Extensions
 {
     public static class ConfigurationExtensions
     {
+        public static bool IsDatabaseInitialized { get => _isDatabaseInitialized; }
+        private static bool _isDatabaseInitialized = false;
         public static IServiceCollection InitDatabaseConnection<TDbContext>(this IServiceCollection services, Action<IDatabaseBuilderOptions> databaseBuilderOptions) where TDbContext : DbContext
         {
+            if (_isDatabaseInitialized) throw new InvalidOperationException("A database connection already initialized.");
+
             IDatabaseBuilderOptions databaseBuilder = new DatabaseBuilderOptions(services);
 
             databaseBuilderOptions.Invoke(databaseBuilder);
@@ -24,6 +28,8 @@ namespace DataAccess.Extensions
             var dbConnectorType = typeof(TDbContext).GetDbConnectorType();
 
             services.AddDbConnector(dbConnectorType);
+
+            _isDatabaseInitialized = true;
 
             return services;
         }
