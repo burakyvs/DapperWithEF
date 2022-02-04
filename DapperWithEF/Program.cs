@@ -11,7 +11,7 @@ services.AddControllers();
 
 // If you want to use another DbContext, change the ProjectDbContext below. 
 
-services.InitDatabaseConnection<ProjectDbContext>(db =>
+services.InitDatabaseConnection<MySqlDbContext>(db =>
 {
     db.Configuration = builder.Configuration;
     db.AddDataAccessor();
