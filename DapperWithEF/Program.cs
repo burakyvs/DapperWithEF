@@ -12,24 +12,22 @@ services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                     {
                         options.Authority = configuration["IdentityServerURL"];
                         options.RequireHttpsMetadata = false;
-                        options.Audience = "product_service_api";
+                        options.Audience = "catalog_service_api";
                     });
 
 services.AddAuthorization(options =>
 {
     options.AddPolicy("read",
-        policy => policy.RequireClaim("scope", "product.api.read", "product.api.full"));
+        policy => policy.RequireClaim("scope", "catalog.api.read", "catalog.api.full"));
     options.AddPolicy("write",
-        policy => policy.RequireClaim("scope", "product.api.write", "product.api.full"));
-    options.AddPolicy("full",
-        policy => policy.RequireClaim("scope", "product.api.full"));
+        policy => policy.RequireClaim("scope", "catalog.api.write", "catalog.api.full"));
 });
 
 services.AddControllers();
 
 // If you want to use another DbContext, change the ProjectDbContext below. 
 
-services.InitDatabaseConnection<SqlServerDbContext>(db =>
+services.InitDatabaseConnection<PostgreSqlDbContext>(db =>
 {
     db.Configuration = builder.Configuration;
     db.AddDataAccessor(); // Default is Dapper.
