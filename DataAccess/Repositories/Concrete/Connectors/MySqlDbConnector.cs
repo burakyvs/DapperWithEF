@@ -2,7 +2,7 @@
 using MySqlConnector;
 using System.Data.Common;
 
-namespace DataAccess.Concrete.MySql
+namespace DataAccess.Repositories.Concrete.Connectors
 {
     public class MySqlDbConnector : DbConnectorBase
     {

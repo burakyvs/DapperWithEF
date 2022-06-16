@@ -9,7 +9,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DataAccess.Migrations
 {
-    [DbContext(typeof(ProjectDbContext))]
+    [DbContext(typeof(DbContextBase))]
     partial class ProjectDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

@@ -2,7 +2,7 @@
 using System.Data.Common;
 using System.Data.SqlClient;
 
-namespace DataAccess.Concrete.SqlServer
+namespace DataAccess.Repositories.Concrete.Connectors
 {
     public class SqlServerDbConnector : DbConnectorBase
     {

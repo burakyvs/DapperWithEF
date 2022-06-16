@@ -11,22 +11,18 @@ namespace DataAccess.Extensions
     {
         public static bool IsDatabaseInitialized { get => _isDatabaseInitialized; }
         private static bool _isDatabaseInitialized = false;
-        public static IServiceCollection InitDatabaseConnection<TDbContext>(this IServiceCollection services, Action<IDatabaseBuilderOptions> databaseBuilderOptions) where TDbContext : DbContext
+        public static IServiceCollection InitDatabaseConnection<TDbContext>(this IServiceCollection services, Action<IDatabaseBuilderOptions> databaseBuilderOptions) where TDbContext : DbContext, IDbContext
         {
             if (_isDatabaseInitialized) throw new InvalidOperationException("A database connection already initialized.");
 
             IDatabaseBuilderOptions databaseBuilder = new DatabaseBuilderOptions(services);
-
             databaseBuilderOptions.Invoke(databaseBuilder);
 
             var configuration = databaseBuilder.Configuration ?? throw new ArgumentNullException(nameof(databaseBuilder.Configuration));
-
-            typeof(TDbContext).SetConnectionString(configuration);
+            SetConnectionString(typeof(TDbContext).Name, configuration);
 
             services.AddDbContext<TDbContext>();
-
-            var dbConnectorType = typeof(TDbContext).GetDbConnectorType();
-
+            var dbConnectorType = GetDbConnectorType<TDbContext>();
             services.AddDbConnector(dbConnectorType);
 
             _isDatabaseInitialized = true;
@@ -39,9 +35,25 @@ namespace DataAccess.Extensions
             services.AddTransient(typeof(IDbConnector), dbConnectorType);
         }
 
-        private static void SetConnectionString(this Type dbContextType, IConfiguration configuration)
+        private static void SetConnectionString(string dbContextName, IConfiguration configuration)
         {
-            ProjectDbContext.ConnectionString = configuration.GetConnectionString(dbContextType.Name);
+            string connectionString = configuration.GetConnectionString(dbContextName);
+
+            if (string.IsNullOrEmpty(connectionString) || string.IsNullOrWhiteSpace(connectionString))
+                throw new ArgumentNullException(nameof(connectionString));
+
+            DbContextBase.ConnectionString = connectionString;
+        }
+
+        public static Type GetDbConnectorType<TDbContext>() where TDbContext : IDbContext
+        {
+            string dbConnectorName = typeof(TDbContext).Name.Replace("Context", "Connector");
+            Type? dbConnectorType = Type.GetType($"DataAccess.Repositories.Concrete.Connectors.{dbConnectorName}, DataAccess");
+
+            if (dbConnectorType != null)
+                return dbConnectorType;
+            else
+                throw new Exception($"DbContext <{typeof(TDbContext).Name}> has no matching <{dbConnectorName}> database connector class.");
         }
     }
 }

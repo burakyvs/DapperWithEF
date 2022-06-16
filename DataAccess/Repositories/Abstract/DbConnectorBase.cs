@@ -14,23 +14,10 @@ namespace DataAccess.Abstract
 
         public DbConnectorBase()
         {
-            _connectionString = ProjectDbContext.ConnectionString;
+            _connectionString = DbContextBase.ConnectionString;
         }
 
-        public virtual async Task<DbConnection> OpenConnectionAsync()
-        {
-            try
-            {
-                DbConnection connection = new NpgsqlConnection(ConnectionString);
-                await connection.OpenAsync();
-
-                return connection;
-            }
-            catch (Exception error)
-            {
-                throw new Exception($"Cannot open database connection: Message: ${error.Message}, StackTrace: {error.StackTrace}");
-            }
-        }
+        public abstract Task<DbConnection> OpenConnectionAsync();
 
         public async Task CloseConnectionAsync(DbConnection connection)
         {

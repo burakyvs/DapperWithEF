@@ -2,9 +2,9 @@
 
 namespace DataAccess.EntityFramework.Contexts
 {
-    public class SqlServerDbContext : DbContextBase, IDbContext
+    public class PostgreSqlDbContext : DbContextBase, IDbContext
     {
-        public SqlServerDbContext(DbContextOptions<SqlServerDbContext> options) : base(options)
+        public PostgreSqlDbContext(DbContextOptions<PostgreSqlDbContext> options) : base(options)
         {
         }
 
@@ -12,7 +12,7 @@ namespace DataAccess.EntityFramework.Contexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                base.OnConfiguring(optionsBuilder.UseSqlServer(ConnectionString));
+                base.OnConfiguring(optionsBuilder.UseNpgsql(ConnectionString));
             }
         }
     }

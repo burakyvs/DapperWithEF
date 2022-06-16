@@ -1,15 +1,12 @@
-﻿using DataAccess.Concrete.MySql;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.EntityFramework.Contexts
 {
-    public class MySqlDbContext : ProjectDbContext
+    public class MySqlDbContext : DbContextBase, IDbContext
     {
-        private static Type DbConnectorType = typeof(MySqlDbConnector);
         public MySqlDbContext(DbContextOptions<MySqlDbContext> options) : base(options)
         {
         }
-
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)

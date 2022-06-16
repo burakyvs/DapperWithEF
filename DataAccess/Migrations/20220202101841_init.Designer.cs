@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace DataAccess.Migrations
 {
-    [DbContext(typeof(ProjectDbContext))]
+    [DbContext(typeof(DbContextBase))]
     [Migration("20220202101841_init")]
     partial class init
     {

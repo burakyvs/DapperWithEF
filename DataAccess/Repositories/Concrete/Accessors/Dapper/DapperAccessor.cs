@@ -31,7 +31,7 @@ namespace DataAccess.Concrete.Dapper
             await transaction.Connection.DeleteAsync(entities);
         }
 
-        public override async Task<IEnumerable<TEntity>> GetAllAsync(DbConnection connection, Func<TEntity, bool> expression = null)
+        public override async Task<IEnumerable<TEntity>> GetAllAsync(DbConnection connection, Func<TEntity, bool>? expression = null)
         {
             var entities = await connection.GetAllAsync<TEntity>();
             var queriedEntities = expression != null ? entities.Where(expression) : entities;
